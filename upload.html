@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eye Disease Prediction</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #004caa,#fc5185);
+            padding: 30px;
+
+        }
+        .container {
+         max-width: 800px;
+         width: 100%;
+         background: white;
+            margin: auto;
+            padding: 25px,30px ;
+            border: 3px solid #fc5185;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h1{
+            font-size: 50px;
+            font-weight: 500;
+
+        }
+        input[type="file"] {
+            margin: 20px 0;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Eye Disease Prediction</h1>
+        <h2>See Clearly, Live Better: Early Detection for Healthier Vision</h2>
+        <form id="upload-form" action="/" method="post" enctype="multipart/form-data">
+            <input type="file" id="file-input" name="file" accept="image/*" required>
+            <br><br>
+            <button type="submit">Upload and Predict</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('file-input');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                document.getElementById('result').textContent = "Please select an image.";
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('result').textContent = Prediction: ${data.prediction};
+                } else {
+                    const errorData = await response.json();
+                    document.getElementById('result').textContent = Error: ${errorData.error};
+                }
+            } catch (error) {
+                document.getElementById('result').textContent = Error: ${error.message};
+            }
+        });
+    </script>
+</body>
+</html>
