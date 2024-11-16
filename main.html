@@ -21,7 +21,7 @@
     <header class="header_wrapper">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a href="index.html" class="navbar-brand" ><i class="fa fa-h-square"></i>OPTIDETECT</a>
+                <a href="main.html" class="navbar-brand" ><i class="fa fa-h-square"></i>OPTIDETECT</a>
                </div>
             </div>
 
@@ -128,7 +128,7 @@
                                       <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone">
                                       <label for="Message">Additional Message</label>
                                       <textarea class="form-control" rows="4" id="message" name="message" placeholder="Message"></textarea>
-                                      <button class="main-btn fill-btn mt-2 "style=" text-decoration: none; border: none;"><a href="{% url 'eye' %}" >Check Vision</a></button>
+                                      <button class="main-btn fill-btn mt-2 "style=" text-decoration: none; border: none;"><a href="index.html" >Check Vision</a></button>
                                  </div>
                             </div>
                       </form>
@@ -139,6 +139,28 @@
    </section>    
 
     <!-- About section exit -->
+
+        <div class="container text-center">
+            <h1 class="my-4">Eye Disease Classifier</h1>
+            
+            <!-- Form to upload image -->
+            <form action="/" method="post" enctype="multipart/form-data">
+                <input class="form-control" type="file" name="imagefile" required>
+                <button class="btn btn-primary mt-3" type="submit">Predict Image</button>
+            </form>
+
+            <!-- Display prediction result -->
+            {% if prediction %}
+                <div class="mt-4">
+                    <h3>Prediction: {{ prediction }}</h3>
+                    {% if image_url %}
+                        <img src="{{ image_url }}" alt="Uploaded Image" class="img-thumbnail mt-3" style="max-width: 300px;">
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+
+
 
     <!-- Services section --> 
     <section id="pathologies" class="services_wrapper wrapper">
